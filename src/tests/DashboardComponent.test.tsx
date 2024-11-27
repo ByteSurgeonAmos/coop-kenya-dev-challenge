@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import Dashboard from "./DashboardComponent";
+import Dashboard from "../components/DashboardComponent";
 import { WalletProvider } from "../context/WalletContext";
 
 const mockProducts = [
