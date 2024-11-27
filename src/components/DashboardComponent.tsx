@@ -128,18 +128,18 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="flex-grow p-6 bg-gray-50">
-      <div className="bg-white p-4 rounded-lg shadow-md">
-        <button className="flex items-center px-4 py-2 mb-4 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+    <div className="flex-grow p-2 sm:p-6 bg-gray-50">
+      <div className="bg-white p-2 sm:p-4 rounded-lg shadow-md">
+        <button className="flex items-center px-3 py-1 sm:px-4 sm:py-2 mb-4 bg-yellow-500 text-white rounded hover:bg-yellow-600">
           &larr; Back
         </button>
-        <h1 className="text-lg font-bold mb-2">Product Details</h1>
-        <p className="text-sm font-medium mb-4">
+        <h1 className="text-base sm:text-lg font-bold mb-2">Product Details</h1>
+        <p className="text-xs sm:text-sm font-medium mb-4">
           Inua mkulima wallet balance:{" "}
           <strong>KES {Math.floor(balance)}</strong>
         </p>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <h2 className="font-semibold mb-2">Products</h2>
             {loading ? (
@@ -177,17 +177,17 @@ const Dashboard: React.FC = () => {
 
           <div>
             <h2 className="font-semibold mb-2">Selected Products</h2>
-            <div className="border rounded-lg p-4 bg-yellow-50">
+            <div className="border rounded-lg p-2 sm:p-4 bg-yellow-50">
               {cartItems.length === 0 ? (
-                <p className="text-gray-600 text-center">
+                <p className="text-gray-600 text-center text-sm">
                   Please select products from the products panel first
                 </p>
               ) : (
                 <>
-                  <div className="grid grid-cols-7 gap-2 mb-2 font-semibold text-sm">
+                  <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 mb-2 font-semibold text-xs sm:text-sm">
                     <div className="col-span-2">Product</div>
-                    <div>Qty</div>
-                    <div>Unit Price</div>
+                    <div className="hidden sm:block">Qty</div>
+                    <div className="hidden sm:block">Unit Price</div>
                     <div>Total</div>
                     <div>Deduction</div>
                     <div></div>
@@ -195,10 +195,10 @@ const Dashboard: React.FC = () => {
                   {cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="grid grid-cols-7 gap-2 py-2 border-b items-center"
+                      className="grid grid-cols-4 sm:grid-cols-7 gap-2 py-2 border-b items-center text-xs sm:text-sm"
                     >
                       <div className="col-span-2">{item.title}</div>
-                      <div className="flex items-center space-x-2">
+                      <div className="hidden sm:flex items-center space-x-2">
                         <button
                           onClick={() => updateQuantity(item.id, -1)}
                           className="text-yellow-600"
@@ -213,7 +213,9 @@ const Dashboard: React.FC = () => {
                           +
                         </button>
                       </div>
-                      <div>{Math.floor(item.price)}</div>
+                      <div className="hidden sm:block">
+                        {Math.floor(item.price)}
+                      </div>
                       <div>{Math.floor(item.price * item.quantity)}</div>
                       <div>
                         <div>{Math.floor(item.deduction)}</div>
@@ -253,12 +255,12 @@ const Dashboard: React.FC = () => {
             ensure you get the balance from the customer.
           </div>
         )}
-        <div className="flex justify-center w-full items-center   ">
-          <button className=" w-[10rem] flex  items-center px-6 py-2  mt-4 mr-4 bg-black text-white rounded">
+        <div className="flex flex-col sm:flex-row justify-center w-full items-center gap-2 sm:gap-4">
+          <button className="w-full sm:w-[10rem] flex justify-center items-center px-4 py-2 mt-4 bg-black text-white rounded">
             &larr; Back
           </button>
           <button
-            className={`w-[1/2] mt-4 px-4 py-2 text-white rounded ${
+            className={`w-full sm:w-auto mt-4 px-4 py-2 text-white rounded ${
               totalAmount > 0 && totalAmount <= balance
                 ? "bg-yellow-500 hover:bg-yellow-600"
                 : "bg-gray-400"
