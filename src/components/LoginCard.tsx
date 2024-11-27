@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /* Test credentials for dummyjson:
  * username: 'emilys'
@@ -11,6 +12,7 @@ interface LoginFormData {
 }
 
 const LoginCard: React.FC = () => {
+  const navigate = useNavigate();
   const [formStep, setFormStep] = useState<1 | 2>(1);
   const [formData, setFormData] = useState<LoginFormData>({
     username: "",
@@ -40,27 +42,28 @@ const LoginCard: React.FC = () => {
 
     setIsLoading(true);
     try {
-      console.log("formData", formData);
       const response = await fetch("https://dummyjson.com/auth/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message ||
-            "Invalid credentials. Try username: kminchelle, password: 0lelplR"
-        );
+        throw new Error(data.message || "Invalid credentials");
       }
 
-      // On successful login
-      console.log("Login successful:", data);
-      alert("Login successful! Token: " + data.token);
+      // Store user data in localStorage
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          name: data.firstName + " " + data.lastName,
+          token: data.token,
+        })
+      );
+
+      navigate("/dashboard");
     } catch (error) {
       setApiError(
         error instanceof Error
